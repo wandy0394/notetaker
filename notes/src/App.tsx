@@ -14,17 +14,25 @@ function App() {
     return notes.map(note=>{
       return {
         ...note, 
-        tags: tags.filter(tag=>note.tagIds.includes(tag.id))
+        tags: tags.filter((tag)=> {
+          return note.tagIds.includes(tag.id)
+        })
       }
     })
   }, [notes, tags])
 
 
-  function onNoteCreate({tags, ...data}: NoteData) {
+  function onNoteCreate({tags, ...data}: NoteData):void {
     setNotes (prev=>{
       return [
         ...prev, 
-        {...data, id:uuidV4(), tagIds:tags.map(tag=>tag.id)}
+        {
+          ...data, 
+          id:uuidV4(), 
+          tagIds:tags.map((tag)=>{
+            return tag.id
+          })
+        }
       ]
     })
   }
@@ -37,7 +45,7 @@ function App() {
             <Route index element={<>Show</>}></Route>
             <Route path='edit' element={<>Edit</>}></Route>
           </Route>
-          <Route path='/new' element={<NoteNew/>}></Route>
+          <Route path='/new' element={<NoteNew onSubmit={onNoteCreate}/>}></Route>
           <Route path='*' element={<Navigate to='/'/>}></Route>
         </Routes>
       </div>

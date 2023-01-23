@@ -3,8 +3,10 @@ import { Link } from "react-router-dom"
 import { FormEvent, useRef, useState } from "react"
 import { NoteFormProps, Tag } from "../types/NoteTypes"
 
-export default function NoteForm({onSubmit}:NoteFormProps) {
 
+
+export default function NoteForm(props:NoteFormProps) {
+    const {onSubmit} = props
 
     const formStyle = {
         fontSize:'2rem',
