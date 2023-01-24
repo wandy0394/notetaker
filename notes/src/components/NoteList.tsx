@@ -10,7 +10,7 @@ type NoteListProps = {
 export default function NoteList(props:NoteListProps) {
     const {availableTags, notes} = props
     const [selectedTags, setSelectTags] = useState<Tag[]>([])
-
+    const [title, setTitle] = useState<string>('')
 
     const bodyStyle = {
         border:'solid',
@@ -51,7 +51,7 @@ export default function NoteList(props:NoteListProps) {
         gap:'2rem',
         width:'100%',
         border:'solid',
-        alignItems:'center'
+        alignItems:'center',
     }
 
     const noteStyle = {
@@ -60,8 +60,8 @@ export default function NoteList(props:NoteListProps) {
         height:'20vh',
         width:'40vh',
         border:'1px solid',
-        borderRadius:'4px',
-        boxShadow:'10px',
+        borderRadius:'8px',
+        boxShadow:'0 4px',
         display:'flex',
         flexDirection:'column' as const
     }
@@ -85,7 +85,7 @@ export default function NoteList(props:NoteListProps) {
                     <form>
                         <div style={{display:'flex', flexDirection:'column', gap:'2rem'}}>
                             <label>Title</label>
-                            <input placeholder="search.."></input>
+                            <input placeholder="search.." value={title} onChange={e=>setTitle(e.target.value)}></input>
                         </div>
                     </form>
                     <div style={{display:'flex', flexDirection:'column', gap:'2rem'}}>
@@ -124,7 +124,14 @@ export default function NoteList(props:NoteListProps) {
                                     <div>{note.title}</div>
                                     <div>{note.markdown}</div>
                                     <div>{note.id}</div>
-                                    <div>{note.tagIds}</div>
+                                    <div>
+                                        {
+                                            note.tagIds.map((id)=>{
+                                                return id
+                                            })
+                                        }
+                                    
+                                    </div>
                                 </div>
                             )
                         })

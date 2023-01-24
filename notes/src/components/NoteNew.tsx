@@ -10,7 +10,11 @@ export default function NoteNew(props:NewNoteProps) {
     const {onSubmit, onAddTag, availableTags} = props
     return (
         <div>
-            <NoteForm onSubmit={onSubmit} onAddTag={onAddTag} availableTags={availableTags}/>
+            <NoteForm 
+                onSubmit={onSubmit} 
+                onAddTag={onAddTag} 
+                availableTags={availableTags}
+            />
         </div>
     )
 }
