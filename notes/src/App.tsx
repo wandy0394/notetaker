@@ -5,6 +5,7 @@ import { RawNote, Tag, NoteData } from './types/NoteTypes'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import { useMemo } from 'react'
 import {v4 as uuidV4} from 'uuid'
+import NoteList from './components/NoteList'
 
 function App() {
   const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", [])
@@ -43,7 +44,7 @@ function App() {
   return (
       <div>
         <Routes>
-          <Route path='/' element={<h1>hi</h1>}></Route>
+          <Route path='/' element={<NoteList availableTags={tags}/>}></Route>
           <Route path='/:id'>
             <Route index element={<>Show</>}></Route>
             <Route path='edit' element={<>Edit</>}></Route>
