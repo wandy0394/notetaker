@@ -21,6 +21,9 @@ function App() {
     })
   }, [notes, tags])
 
+  function addTag(tag:Tag) {
+    setTags(prev=>[...prev, tag])
+  }
 
   function onNoteCreate({tags, ...data}: NoteData):void {
     setNotes (prev=>{
@@ -45,7 +48,7 @@ function App() {
             <Route index element={<>Show</>}></Route>
             <Route path='edit' element={<>Edit</>}></Route>
           </Route>
-          <Route path='/new' element={<NoteNew onSubmit={onNoteCreate}/>}></Route>
+          <Route path='/new' element={<NoteNew onSubmit={onNoteCreate} onAddTag={addTag} availableTags={tags}/>}></Route>
           <Route path='*' element={<Navigate to='/'/>}></Route>
         </Routes>
       </div>
