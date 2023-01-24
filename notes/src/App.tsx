@@ -44,7 +44,7 @@ function App() {
   return (
       <div>
         <Routes>
-          <Route path='/' element={<NoteList availableTags={tags}/>}></Route>
+          <Route path='/' element={<NoteList notes={notes} availableTags={tags}/>}></Route>
           <Route path='/:id'>
             <Route index element={<>Show</>}></Route>
             <Route path='edit' element={<>Edit</>}></Route>

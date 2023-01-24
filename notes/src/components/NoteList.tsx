@@ -1,13 +1,17 @@
 import ReactSelect from 'react-select'
 import {useState} from 'react'
-import { Tag } from '../types/NoteTypes'
+import { RawNote, Tag } from '../types/NoteTypes'
 
 type NoteListProps = {
     availableTags: Tag[]
+    notes: RawNote[]
 }
 
-export default function NoteList({availableTags}:NoteListProps) {
+export default function NoteList(props:NoteListProps) {
+    const {availableTags, notes} = props
     const [selectedTags, setSelectTags] = useState<Tag[]>([])
+
+
     const bodyStyle = {
         border:'solid',
         height:'100vh',
@@ -57,7 +61,9 @@ export default function NoteList({availableTags}:NoteListProps) {
         width:'40vh',
         border:'1px solid',
         borderRadius:'4px',
-        boxShadow:'2px'
+        boxShadow:'10px',
+        display:'flex',
+        flexDirection:'column' as const
     }
 
     const sectionStyle = {
@@ -111,6 +117,18 @@ export default function NoteList({availableTags}:NoteListProps) {
             </div>
             <div style={sectionStyle}>
                 <div style={noteListStyle}>
+                    {
+                        notes.map(note=>{
+                            return (
+                                <div style={noteStyle}>
+                                    <div>{note.title}</div>
+                                    <div>{note.markdown}</div>
+                                    <div>{note.id}</div>
+                                    <div>{note.tagIds}</div>
+                                </div>
+                            )
+                        })
+                    }
                     <div style={noteStyle}>Note1</div>
                     <div style={noteStyle}>Note1</div>
                     <div style={noteStyle}>Note1</div>
