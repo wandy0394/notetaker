@@ -1,10 +1,45 @@
 import ReactSelect from 'react-select'
-import {useState} from 'react'
-import { RawNote, Tag } from '../types/NoteTypes'
+import {useMemo, useState} from 'react'
+import { RawNote, Tag, Note } from '../types/NoteTypes'
+import {Link} from 'react-router-dom'
 
 type NoteListProps = {
     availableTags: Tag[]
-    notes: RawNote[]
+    notes: SimpleNote[]
+}
+
+
+type SimpleNote = {
+    tags: Tag[]
+    title: string
+    id: string
+}
+function NoteCard({id, title, tags}:SimpleNote) {
+    const noteStyle = {
+        minWidth:'300px',
+        minHeight:'150px',
+        height:'20vh',
+        width:'40vh',
+        border:'1px solid',
+        borderRadius:'8px',
+        boxShadow:'0 4px',
+        display:'flex',
+        flexDirection:'column' as const
+    }
+    return (
+            <Link to={`/${id}`}>
+                <div style={noteStyle}>
+                    <div>{title}</div>
+                    <div>
+                        {
+                            tags.map((tag)=>{
+                                return tag.label
+                            })
+                        }
+                    </div>
+                </div>
+            </Link>
+    )
 }
 
 export default function NoteList(props:NoteListProps) {
@@ -12,12 +47,19 @@ export default function NoteList(props:NoteListProps) {
     const [selectedTags, setSelectTags] = useState<Tag[]>([])
     const [title, setTitle] = useState<string>('')
 
+
+    const filteredNotes = useMemo(()=>{
+        return notes.filter(note=> {
+            return (title === "" || note.title.toLowerCase().includes(title.toLowerCase()))
+                && (selectedTags.length === 0 || selectedTags.every(tag=>note.tags.some(noteTag=> noteTag.id === tag.id)))
+            
+        })
+    }, [title, selectedTags])
+
     const bodyStyle = {
         border:'solid',
         height:'100vh',
         display:'grid',
-        // gridTemplateRows:'1fr',
-        // gridAutoRows:'1fr',
         paddingTop:'2rem',
         paddingBottom:'2rem',
         gap:'2rem'
@@ -118,30 +160,12 @@ export default function NoteList(props:NoteListProps) {
             <div style={sectionStyle}>
                 <div style={noteListStyle}>
                     {
-                        notes.map(note=>{
+                        filteredNotes.map(note=>{
                             return (
-                                <div style={noteStyle}>
-                                    <div>{note.title}</div>
-                                    <div>{note.markdown}</div>
-                                    <div>{note.id}</div>
-                                    <div>
-                                        {
-                                            note.tagIds.map((id)=>{
-                                                return id
-                                            })
-                                        }
-                                    
-                                    </div>
-                                </div>
+                                <NoteCard id={note.id} title={note.title} tags={note.tags}/>
                             )
                         })
                     }
-                    <div style={noteStyle}>Note1</div>
-                    <div style={noteStyle}>Note1</div>
-                    <div style={noteStyle}>Note1</div>
-                    <div style={noteStyle}>Note1</div>
-                    <div style={noteStyle}>Note1</div>
-                    <div style={noteStyle}>Note1</div>
                 </div>
 
             </div>
