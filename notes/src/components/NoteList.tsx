@@ -6,6 +6,8 @@ import {Link} from 'react-router-dom'
 type NoteListProps = {
     availableTags: Tag[]
     notes: SimpleNote[]
+    updateTag: (id:string, label:string) => void
+    deleteTag: (id:string) => void
 }
 
 
@@ -13,6 +15,13 @@ type SimpleNote = {
     tags: Tag[]
     title: string
     id: string
+}
+type EditTagsModalProps = {
+    open: Boolean
+    handleClose:()=>void
+    availableTags: Tag[]
+    updateTag: (id:string, label:string) => void
+    deleteTag: (id:string) => void
 }
 function NoteCard({id, title, tags}:SimpleNote) {
     const noteStyle = {
@@ -43,10 +52,10 @@ function NoteCard({id, title, tags}:SimpleNote) {
 }
 
 export default function NoteList(props:NoteListProps) {
-    const {availableTags, notes} = props
+    const {availableTags, notes, updateTag, deleteTag} = props
     const [selectedTags, setSelectTags] = useState<Tag[]>([])
     const [title, setTitle] = useState<string>('')
-
+    const [open, setOpen] = useState<Boolean>(false)
 
     const filteredNotes = useMemo(()=>{
         return notes.filter(note=> {
@@ -79,6 +88,7 @@ export default function NoteList(props:NoteListProps) {
         fontSize:'4rem',
         fontFamily:'Helvetica'
     }
+
 
     const buttonStyle = {
 
@@ -121,8 +131,10 @@ export default function NoteList(props:NoteListProps) {
                         All Notes
                     </div>
                     <div>
-                        <button style={buttonStyle}>Create</button>
-                        <button style={buttonStyle}>Edit Tags</button>
+                        <Link to='/new'>
+                            <button style={buttonStyle}>Create</button>
+                        </Link>
+                        <button style={buttonStyle} onClick={()=>setOpen(prev=>!prev)}>Edit Tags</button>
                     </div>
                     <form>
                         <div style={{display:'flex', flexDirection:'column', gap:'2rem'}}>
@@ -169,8 +181,49 @@ export default function NoteList(props:NoteListProps) {
                 </div>
 
             </div>
+            <EditTagsModal open={open} handleClose={()=>setOpen(false)} availableTags={availableTags} updateTag={updateTag} deleteTag={deleteTag}/>
         </div>
     )
 
 
+}
+
+function EditTagsModal(props:EditTagsModalProps) {
+    const {open, handleClose, availableTags, updateTag, deleteTag} = props
+    const modalStyle = {
+        display: open?'block':'none',
+        position: 'fixed' as const,
+        zIndex: '1',
+        left: '25%',
+        top: '25%',
+        width: '50%',
+        height: '50%',
+        overflow: 'auto', 
+        backgroundColor: 'rgb(255,255,255)',
+        border:'solid'
+    }
+    return (
+        <div style={modalStyle}>
+            Edit Tags
+            <div style={{display:'flex', flexDirection:'column'}}>
+                <form>
+                    <div style={{display:'flex', flexDirection:'column'}}>
+                        {
+                            availableTags.map(tag=>{
+                                return (
+                                    <div>
+                                        <input defaultValue={tag.label} onChange={(e)=>updateTag(tag.id, e.target.value)}/>
+                                        <button onClick={()=>deleteTag(tag.id)} >X</button>
+                                    </div>)
+                            })
+                        }
+
+                    </div>
+                </form>
+                <div>
+                    <button onClick={handleClose}>Close</button>
+                </div>
+            </div>
+        </div>
+    )
 }
