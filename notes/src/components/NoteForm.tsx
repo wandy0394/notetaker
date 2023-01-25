@@ -7,7 +7,7 @@ import {v4 as uuidV4} from 'uuid'
 
 
 export default function NoteForm(props:NoteFormProps) {
-    const {onSubmit, onAddTag, availableTags} = props
+    const {onSubmit, onAddTag, availableTags, title="", markdown="", tags=[]} = props
 
     const formStyle = {
         fontSize:'2rem',
@@ -23,7 +23,7 @@ export default function NoteForm(props:NoteFormProps) {
 
     const titleRef=useRef<HTMLInputElement>(null)
     const markdownRef=useRef<HTMLTextAreaElement>(null)
-    const [selectedTags, setSelectTags] = useState<Tag[]>([])
+    const [selectedTags, setSelectTags] = useState<Tag[]>(tags)
     const navigate = useNavigate()
 
 
@@ -44,7 +44,7 @@ export default function NoteForm(props:NoteFormProps) {
         <form onSubmit={handleSubmit}>
             <div style={formStyle}>
                 <label>Title</label>
-                <input required ref={titleRef}/>
+                <input required ref={titleRef} defaultValue={title}/>
 
                 <label>Tags</label>
                 <CreateableReactSelect 
@@ -78,7 +78,7 @@ export default function NoteForm(props:NoteFormProps) {
                 />
 
                 <label>Body</label>
-                <textarea required ref={markdownRef}/>
+                <textarea required ref={markdownRef} defaultValue={markdown}/>
             </div>
             <div style={buttonStyle}>
                 <button type='submit'>Save</button>

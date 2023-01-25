@@ -13,6 +13,9 @@ export default function NoteEdit(props:EditNoteProps) {
     return (
         <div>
             <NoteForm 
+                title={note.title}
+                markdown={note.markdown}
+                tags={note.tags}
                 onSubmit={data =>onSubmit(note.id, data)} 
                 onAddTag={onAddTag} 
                 availableTags={availableTags}
