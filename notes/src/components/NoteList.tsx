@@ -85,8 +85,8 @@ export default function NoteList(props:NoteListProps) {
     }
 
     const titleStyle = {
-        fontSize:'4rem',
-        fontFamily:'Helvetica'
+        // fontSize:'4rem',
+        // fontFamily:'Helvetica'
     }
 
 
@@ -127,7 +127,7 @@ export default function NoteList(props:NoteListProps) {
         <div style={bodyStyle}>
             <div style={sectionStyle}>
                 <div style={searchSectionStyle}>
-                    <div style={titleStyle}>
+                    <div style={titleStyle} className="text-5xl">
                         All Notes
                     </div>
                     <div>
