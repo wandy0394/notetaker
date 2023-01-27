@@ -1,5 +1,6 @@
 import {useMemo, useState} from 'react'
-import { Tag} from '../types/NoteTypes'
+import { Tag, NoteData} from '../types/NoteTypes'
+import AddNoteModal from './AddNoteModal'
 import Header from './common/Header'
 import EditTagsModal from './EditTagsModal'
 import NoteCard, { AddNoteCard, SimpleNote } from './NoteCard'
@@ -9,16 +10,19 @@ type NoteListProps = {
     notes: SimpleNote[]
     updateTag: (id:string, label:string) => void
     deleteTag: (id:string) => void
+    onAddTag: (tag: Tag) => void
+    onNoteCreate: (data:NoteData) => void
 }
 
 
 
 
 export default function NoteList(props:NoteListProps) {
-    const {availableTags, notes, updateTag, deleteTag} = props
+    const {availableTags, notes, onAddTag, updateTag, deleteTag, onNoteCreate} = props
     const [selectedTags, setSelectTags] = useState<Tag[]>([])
     const [title, setTitle] = useState<string>('')
     const [open, setOpen] = useState<Boolean>(false)
+    const [addOpen, setAddOpen] = useState<Boolean>(false)
 
     const filteredNotes = useMemo(()=>{
         return notes.filter(note=> {
@@ -44,16 +48,22 @@ export default function NoteList(props:NoteListProps) {
           
           
             <div className='grid grid-cols-1 gap-y-8 items-center w-full py-52 p-8 md:gap-8 md:px-24 md:py-32 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-                <AddNoteCard />
+                <AddNoteCard onOpen={()=>setAddOpen(true)}/>
                 {
                     filteredNotes.map(note=>{
                         return (
-                            <NoteCard id={note.id} title={note.title} tags={note.tags} markdown={note.markdown}/>
+                            <NoteCard key={note.id} id={note.id} title={note.title} tags={note.tags} markdown={note.markdown}/>
                         )
                     })
                 }
             </div>
-
+            <AddNoteModal 
+                availableTags={availableTags} 
+                open={addOpen} 
+                handleClose={()=>setAddOpen(false)}
+                onSubmit={onNoteCreate} 
+                onAddTag={onAddTag} 
+            />
           
             <EditTagsModal 
                 open={open} 

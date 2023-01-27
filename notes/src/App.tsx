@@ -99,6 +99,8 @@ function App() {
                 availableTags={tags} 
                 updateTag={updateTag} 
                 deleteTag={deleteTag}
+                onAddTag={addTag}
+                onNoteCreate={onNoteCreate}
               />
             }
           />

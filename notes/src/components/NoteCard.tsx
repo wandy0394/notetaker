@@ -44,11 +44,19 @@ export default function NoteCard({id, title, tags, markdown}:SimpleNote) {
     )
 }
 
-export function AddNoteCard() {
+
+type AddNoteProps = {
+    onOpen: ()=>void
+}
+
+export function AddNoteCard({onOpen}:AddNoteProps) {
 
     return (
-            <Link to={`/new`}>
-                <div className='flex flex-col items-center border-4 border-dashed rounded border-gray-500 p-4 h-64 max-w-60 hover:bg-gray-300'>
+            // <Link to={`/new`}>
+                <div 
+                    className='flex flex-col items-center border-4 border-dashed rounded border-gray-500 p-4 h-64 max-w-60 hover:bg-gray-300' 
+                    onClick={onOpen}
+                >
                     <div className='text-xl'>
                         Add Note
                     </div>
@@ -57,6 +65,6 @@ export function AddNoteCard() {
                         +
                     </div>
                 </div>
-            </Link>
+            // </Link>
     )
 }

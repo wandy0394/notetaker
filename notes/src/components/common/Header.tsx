@@ -65,6 +65,16 @@ export default function Header(props:HeaderProps) {
                             backgroundColor:'transparent',
                             border:'none',
                         }),
+                        multiValue:styles=>({
+                            ...styles,
+                            backgroundColor: 'rgb(29,78,216)',
+                            borderRadius:'4px',
+                            color:'white'
+                        }),
+                        multiValueLabel:styles=>({
+                            ...styles,
+                            color:'white'
+                        })
                     }}
                     options={availableTags.map(tag=>{
                         return {
