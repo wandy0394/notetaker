@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
 import ReactSelect from "react-select"
 import { Tag } from "../../types/NoteTypes"
+import {HiPencil} from "react-icons/hi/"
+
+
 
 type HeaderProps = {
     headerTitle:string
@@ -24,7 +27,10 @@ export default function Header(props:HeaderProps) {
                 <div className="block sm:hidden text-gray-300 text-xl h-10 flex items-center justify-center">
                         |
                 </div>
-                <img className="block sm:hidden cursor-pointer" onClick={onEditClick} src=''/>
+                <div className="block sm:hidden cursor-pointer w-9 h-9 flex items-end justify-center" onClick={onEditClick}>
+                    <HiPencil size='24px' color="lightgray"/>
+                </div>
+                {/* <img className="block sm:hidden cursor-pointer w-8 h-9" onClick={onEditClick} src='/icons8-pencil-90.png'/> */}
                 
             </div>
             <div className="h-full flex flex-col w-full gap-y-4 md:flex-row md:gap-x-4 md:items-center">
@@ -80,7 +86,9 @@ export default function Header(props:HeaderProps) {
                     }
                     placeholder='Select Tags...'
                 />
-                <button className="hidden sm:block" onClick={onEditClick}>Edit</button>
+                <div className="hidden cursor-pointer w-9 h-9 flex items-center justify-center sm:flex" onClick={onEditClick}>
+                    <HiPencil size='24px' color="lightgray"/>
+                </div>
             </div>
         </div>
     )
