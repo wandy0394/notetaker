@@ -64,45 +64,39 @@ export default function NoteList(props:NoteListProps) {
     }
 
 
-    const sectionStyle = {
 
-        border:'solid'
-    }
 
     return (
-        <div className="h-screen w-screen border-solid bg-gray-50">
-            <div style={sectionStyle}>
-                <div style={searchSectionStyle}>
-                    <Header 
-                        headerTitle='NoteTaker' 
-                        noteTitle={title} 
-                        onTitleChange={(e)=>setTitle(e)}
-                        availableTags={availableTags}
-                        selectedTags={selectedTags}
-                        onTagChange={e=>setSelectTags(e)}
-                    >
-                    </Header>
-                    
-                </div>
-                <div>
-                    <Link to='/new'>
-                        <button style={buttonStyle}>Create</button>
-                    </Link>
-                    <button style={buttonStyle} onClick={()=>setOpen(prev=>!prev)}>Edit Tags</button>
-                </div>
+        <div className="h-full w-screen border border-solid border-black bg-gray-50 sm:h-screen">
+            
+            
+            <Header 
+                headerTitle='NoteTaker' 
+                noteTitle={title} 
+                onTitleChange={(e)=>setTitle(e)}
+                availableTags={availableTags}
+                selectedTags={selectedTags}
+                onTagChange={e=>setSelectTags(e)}
+                onEditClick={()=>setOpen(prev=>!prev)}
+            >
+            </Header>
+          
+            {/* <div>
+                <button style={buttonStyle} onClick={()=>setOpen(prev=>!prev)}>Edit Tags</button>
+            </div> */}
+          
+          
+            <div className='flex flex-col gap-y-8 items-center w-full py-48 sm: gap-8 sm:p-24 sm:grid sm:grid-cols-2 md:grid-cols-3'>
+                {
+                    filteredNotes.map(note=>{
+                        return (
+                            <NoteCard id={note.id} title={note.title} tags={note.tags}/>
+                        )
+                    })
+                }
             </div>
-            <div style={sectionStyle}>
-                <div style={noteListStyle}>
-                    {
-                        filteredNotes.map(note=>{
-                            return (
-                                <NoteCard id={note.id} title={note.title} tags={note.tags}/>
-                            )
-                        })
-                    }
-                </div>
 
-            </div>
+          
             <EditTagsModal 
                 open={open} 
                 handleClose={()=>setOpen(false)} 
