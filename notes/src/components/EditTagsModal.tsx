@@ -1,4 +1,5 @@
 import { Tag } from "../types/NoteTypes"
+import {IoMdClose} from "react-icons/io"
 
 type EditTagsModalProps = {
     open: Boolean
@@ -10,39 +11,36 @@ type EditTagsModalProps = {
 
 export default function EditTagsModal(props:EditTagsModalProps) {
     const {open, handleClose, availableTags, updateTag, deleteTag} = props
-    const modalStyle = {
-        display: open?'block':'none',
-        position: 'fixed' as const,
-        zIndex: '1',
-        left: '25%',
-        top: '25%',
-        width: '50%',
-        height: '50%',
-        overflow: 'auto', 
-        backgroundColor: 'rgb(255,255,255)',
-        border:'solid'
-    }
-    return (
-        <div style={modalStyle}>
-            Edit Tags
-            <div style={{display:'flex', flexDirection:'column'}}>
-                <form>
-                    <div style={{display:'flex', flexDirection:'column'}}>
-                        {
-                            availableTags.map(tag=>{
-                                return (
-                                    <div>
-                                        <input defaultValue={tag.label} onChange={(e)=>updateTag(tag.id, e.target.value)}/>
-                                        <button onClick={()=>deleteTag(tag.id)} >X</button>
-                                    </div>)
-                            })
-                        }
 
-                    </div>
-                </form>
-                <div>
-                    <button onClick={handleClose}>Close</button>
+    return (
+        <div className={`absolute p-8 top-0 right-0 h-screen bg-gray-300 flex flex-col gap-y-8 ${open?'block':'hidden'}`}>
+            <div className='flex justify-between items-center'>
+                <div className='text-4xl'>
+                    Edit Tags
                 </div>
+                <IoMdClose size={30} className='hover:text-red-500' onClick={handleClose}/>
+
+            </div>
+            <div className='flex flex-col'>
+                
+                <div className='flex flex-col gap-y-2'>
+                    {
+                        availableTags.map(tag=>{
+                            return (
+                                <div className='flex items-center justify-between gap-x-2'>
+                                    <input 
+                                        className='h-8 text-white bg-blue-700 px-4 rounded focus:bg-blue-200 focus:text-black'
+                                        defaultValue={tag.label} 
+                                        onChange={(e)=>updateTag(tag.id, e.target.value)}
+                                    />
+                                    <IoMdClose size={20} className='hover:text-red-500' onClick={()=>deleteTag(tag.id)}/>
+                                </div>
+                            )
+                        })
+                    }
+
+                </div>
+                
             </div>
         </div>
     )

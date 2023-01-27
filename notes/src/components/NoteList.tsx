@@ -1,10 +1,8 @@
-import ReactSelect from 'react-select'
 import {useMemo, useState} from 'react'
 import { Tag} from '../types/NoteTypes'
-import {Link} from 'react-router-dom'
 import Header from './common/Header'
 import EditTagsModal from './EditTagsModal'
-import NoteCard, { SimpleNote } from './NoteCard'
+import NoteCard, { AddNoteCard, SimpleNote } from './NoteCard'
 
 type NoteListProps = {
     availableTags: Tag[]
@@ -30,44 +28,9 @@ export default function NoteList(props:NoteListProps) {
                 && (selectedTags.length === 0 || selectedTags.every(tag=>note.tags.some(noteTag => noteTag.id === tag.id))) 
         })
     }, [title, selectedTags])
-
-    const bodyStyle = {
-        border:'solid',
-        height:'100vh',
-        display:'grid',
-        // paddingTop:'2rem',
-        paddingBottom:'2rem',
-        gap:'2rem'
-    }
-    
-    const searchSectionStyle = {
-        // display:'grid', 
-        // gridTemplateColumns:'1fr 1fr',
-        // gridTemplateRows: '1fr 1fr',
-        // gap: '2rem',
-        // border:'solid',
-        // width:'100%',
-        // flexGrow:'1'
-    }
-
-    const buttonStyle = {
-
-    }
-
-    const noteListStyle = {
-        display:'flex',
-        flexWrap: 'wrap' as const,
-        gap:'2rem',
-        width:'100%',
-        border:'solid',
-        alignItems:'center',
-    }
-
-
-
-
+  
     return (
-        <div className="">
+        <div className="relative">
             <Header 
                 headerTitle='NoteTaker' 
                 noteTitle={title} 
@@ -80,7 +43,8 @@ export default function NoteList(props:NoteListProps) {
             </Header>
           
           
-            <div className='grid grid-cols-1 gap-y-8 items-center w-full py-48 p-8 md:gap-8 md:p-24 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+            <div className='grid grid-cols-1 gap-y-8 items-center w-full py-52 p-8 md:gap-8 md:px-24 md:py-32 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+                <AddNoteCard />
                 {
                     filteredNotes.map(note=>{
                         return (
