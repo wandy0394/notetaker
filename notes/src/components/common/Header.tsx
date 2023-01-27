@@ -27,11 +27,12 @@ export default function Header(props:HeaderProps) {
                 <div className="block sm:hidden text-gray-300 text-xl h-10 flex items-center justify-center">
                         |
                 </div>
-                <div className="block cursor-default w-9 h-9 flex items-center justify-center sm:hidden" onClick={onEditClick}>
+                <div 
+                    className="block cursor-default w-9 h-9 flex items-center justify-center md:hidden" 
+                    onClick={onEditClick}
+                >
                     <HiPencil size='24px' className='text-gray-300 hover:text-gray-400'/>
                 </div>
-                {/* <img className="block sm:hidden cursor-pointer w-8 h-9" onClick={onEditClick} src='/icons8-pencil-90.png'/> */}
-                
             </div>
             <div className="h-full flex flex-col w-full gap-y-4 md:flex-row md:gap-x-4 md:items-center">
                 <div className='h-10 w-full flex items:start'>
@@ -86,7 +87,7 @@ export default function Header(props:HeaderProps) {
                     }
                     placeholder='Select Tags...'
                 />
-                <div className="hidden cursor-default w-9 h-9 flex items-center justify-center sm:flex" onClick={onEditClick}>
+                <div className="hidden cursor-default w-9 h-9 flex items-center justify-center md:flex" onClick={onEditClick}>
                     <HiPencil size='24px' className='text-gray-300 hover:text-gray-400'/>
                 </div>
             </div>

@@ -90,7 +90,7 @@ function App() {
   }
 
   return (
-      <div>
+      <div className='h-full w-screen'>
         <Routes>
           <Route path='/' 
             element={
