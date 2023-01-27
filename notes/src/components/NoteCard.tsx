@@ -31,21 +31,23 @@ export default function NoteCard({id, title, tags, markdown}:SimpleNote) {
 
     return (
             <Link to={`/${id}`}>
-                <div className='flex flex-col items-center p-2 bg-blue-300 h-64 max-w-60'>
-                    <div className='flex flex-row items-start justify-between text-3xl w-full'>
-                        {title}
+                <div className='flex flex-col items-center p-4 bg-blue-300 h-64 max-w-60'>
+                    <div className='flex flex-row items-start justify-between w-full'>
+                        <div className="truncate text-3xl">
+                            {title}
+                        </div>
                         <div className='text-sm'>
                             01/01/01
                         </div>
                     </div>
-                    <div className='py-2 flex flex-row gap-x-2'>
+                    <div className='py-2 flex flex-row gap-2 overflow-x-auto w-full'>
                         {
                             tags.map((tag)=>{
                                 return <TagIcon label={tag.label}/>
                             })
                         }
                     </div>
-                    <div className='flex-1 w-full'>
+                    <div className='flex-1 min-h-0 w-full break-words overflow-ellipsis overflow-hidden border border-solid'>
                         {markdown}
                     </div>
                 </div>
