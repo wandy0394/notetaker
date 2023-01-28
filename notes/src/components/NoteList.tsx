@@ -118,7 +118,7 @@ export default function NoteList(props:NoteListProps) {
             return (title === "" || note.title.toLowerCase().includes(title.toLowerCase()))
                 && (selectedTags.length === 0 || selectedTags.every(tag=>note.tags.some(noteTag => noteTag.id === tag.id))) 
         })
-    }, [title, selectedTags])
+    }, [title, selectedTags, notesTagged])
   
     function selectNote(note:EditNoteProps) {
         setSelectedNote(note)
@@ -160,7 +160,7 @@ export default function NoteList(props:NoteListProps) {
                 availableTags={availableTags} 
                 open={editOpen} 
                 handleClose={()=>setEditOpen(false)}
-                onSubmit={(data)=>onUpdateNote(selectedNote.id, data)} 
+                onSubmit={(data:any)=>onUpdateNote(selectedNote.id, data)} 
                 onAddTag={onAddTag} 
                 selectedNote={selectedNote}
             />
