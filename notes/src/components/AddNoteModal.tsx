@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom"
 import CreateableReactSelect from "react-select/creatable"
 import { NoteData, NoteFormProps, Tag } from "../types/NoteTypes"
 import {v4 as uuidV4} from 'uuid'
-import translate from "../api/translation-service"
+import Translator from "../api/translation-service"
+import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 
 type AddNoteModalProps = {
     open: Boolean
@@ -37,9 +38,14 @@ export default function AddNoteModal(props:AddNoteModalProps) {
     }
     function handleTranslate() {
         let markdown = markdownRef.current!.value
-        translate()
-        //make api call
-        //setTranslatedText(result)
+        Translator.translate(markdown, 'es')
+            .then((result)=>{
+                console.log(result)
+                setTranslatedText(result.output)
+            })
+            .catch((result)=>{
+                console.log(result)
+            })
     }
     return (
         

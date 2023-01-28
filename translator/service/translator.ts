@@ -10,10 +10,6 @@ type Props = {
 }
 
 export default async function translate({text, target}:Props) {
-    // const text='hello world'
-    // const target ='es'
     const [translation] = await translator.translate(text, target)
-    console.log(text)
-    console.log(translation)
     return translation
 }
