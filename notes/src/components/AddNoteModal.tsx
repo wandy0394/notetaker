@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import CreateableReactSelect from "react-select/creatable"
 import { NoteData, NoteFormProps, Tag } from "../types/NoteTypes"
 import {v4 as uuidV4} from 'uuid'
+import translate from "../api/translation-service"
 
 type AddNoteModalProps = {
     open: Boolean
@@ -21,6 +22,7 @@ export default function AddNoteModal(props:AddNoteModalProps) {
     const titleRef=useRef<HTMLInputElement>(null)
     const markdownRef=useRef<HTMLTextAreaElement>(null)
     const [selectedTags, setSelectTags] = useState<Tag[]>(tags)
+    const [translatedText, setTranslatedText] = useState<string>('')
     const navigate = useNavigate()
 
 
@@ -32,6 +34,12 @@ export default function AddNoteModal(props:AddNoteModalProps) {
             tags:selectedTags
         })
         handleClose()
+    }
+    function handleTranslate() {
+        let markdown = markdownRef.current!.value
+        translate()
+        //make api call
+        //setTranslatedText(result)
     }
     return (
         
@@ -95,13 +103,23 @@ export default function AddNoteModal(props:AddNoteModalProps) {
                     placeholder='Select Tags...'
                 />
 
-                <textarea 
-                    className='px-4 py-2 bg-blue-300'
-                    required 
-                    ref={markdownRef} 
-                    defaultValue={markdown} 
-                    placeholder='Add notes...'
-                />
+                <div className="flex gap-x-4 w-full items-center">
+                    <textarea 
+                        className='px-4 py-2 bg-blue-300 w-full'
+                        required 
+                        ref={markdownRef} 
+                        defaultValue={markdown} 
+                        placeholder='Add notes...'
+                    />
+                    <div>
+                        <button onClick={handleTranslate} className='px-2 rounded bg-gray-50 '>Translate</button> 
+                    </div>
+                    <textarea 
+                        className='px-4 py-2 bg-blue-300 w-full border border-solid border-black'
+                        disabled      
+                        value={translatedText}                   
+                    />
+                </div>
             </div>
             <div className='flex gap-x-4 py-4'>
                 <button type='submit' className='w-full py-2 rounded-full text-xl text-white bg-blue-700 hover:bg-blue-400'>Save</button>
