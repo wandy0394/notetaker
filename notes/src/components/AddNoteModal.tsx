@@ -28,11 +28,6 @@ export default function AddNoteModal(props:AddNoteModalProps) {
     const [sourceText, setSourceText] = useState<string>('')
     const [targetLang, setTargetLang] = useState<string>('en')
     const [sourceLang, setSourceLang] = useState<string>('en')
-    const navigate = useNavigate()
-
-    useEffect(()=>{
-        console.log(targetLang)
-    }, [targetLang])
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault()
@@ -45,7 +40,6 @@ export default function AddNoteModal(props:AddNoteModalProps) {
     }
     function handleTranslate(e: FormEvent) {
         e.preventDefault()
-        // let markdown = markdownRef.current!.value
         Translator.translate(sourceText, sourceLang, targetLang)
             .then((result)=>{
                 console.log(result)

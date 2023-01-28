@@ -1,31 +1,118 @@
-import {useMemo, useState} from 'react'
-import { Tag, NoteData} from '../types/NoteTypes'
+import {useEffect, useMemo, useState} from 'react'
+import { useLocalStorage } from '../hooks/useLocalStorage'
+import { Tag, NoteData, RawNote, EditNoteProps} from '../types/NoteTypes'
 import AddNoteModal from './AddNoteModal'
 import Header from './common/Header'
 import EditTagsModal from './EditTagsModal'
 import NoteCard, { AddNoteCard, SimpleNote } from './NoteCard'
+import {v4 as uuidV4} from 'uuid'
+import EditNoteModal from './EditNoteModal'
 
 type NoteListProps = {
-    availableTags: Tag[]
-    notes: SimpleNote[]
-    updateTag: (id:string, label:string) => void
-    deleteTag: (id:string) => void
-    onAddTag: (tag: Tag) => void
-    onNoteCreate: (data:NoteData) => void
+    availableTags?: Tag[]
+    notes?: SimpleNote[]
+    updateTag?: (id:string, label:string) => void
+    deleteTag?: (id:string) => void
+    onAddTag?: (tag: Tag) => void
+    onNoteCreate?: (data:NoteData) => void
 }
 
 
 
 
 export default function NoteList(props:NoteListProps) {
-    const {availableTags, notes, onAddTag, updateTag, deleteTag, onNoteCreate} = props
+    // const {availableTags, onAddTag} = props
     const [selectedTags, setSelectTags] = useState<Tag[]>([])
     const [title, setTitle] = useState<string>('')
     const [open, setOpen] = useState<Boolean>(false)
     const [addOpen, setAddOpen] = useState<Boolean>(false)
+    const [editOpen, setEditOpen] = useState<boolean>(false)
+    const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", [])
+    const [availableTags, setAvailableTags] = useLocalStorage<Tag[]>("TAGS", [])
+    const [selectedNote, setSelectedNote] = useState<EditNoteProps>({id:'', title:'', markdown:'', tagIds:[], tags:[]})
+
+    useEffect(()=>{
+        console.log('Tag changed')
+    },[availableTags])
+
+    const notesTagged = useMemo(()=>{
+      return notes.map(note=>{
+        return {
+          ...note, 
+          tags: availableTags.filter((tag)=> {
+            return note.tagIds.includes(tag.id)
+          })
+        }
+      })
+    }, [notes, availableTags])
+  
+    function onAddTag(tag:Tag) {
+      setAvailableTags(prev=>[...prev, tag])
+    }
+  
+    function updateTag(id: string, label:string) {
+      setAvailableTags(prev=>{
+        return prev.map(tag=> {
+          if (tag.id === id) {
+            return {...tag, label:label}
+          }
+          else {
+            return tag
+          }
+        })
+      })
+    }
+  
+    function deleteTag(id: string) {
+      setAvailableTags(prev=>{
+        return prev.filter(tag=>{
+          return tag.id !== id
+        })
+      })
+    }
+    function onNoteCreate({tags, ...data}: NoteData):void {
+      setNotes (prev=>{
+        return [
+          ...prev, 
+          {
+            ...data, 
+            id:uuidV4(), 
+            tagIds:tags.map((tag)=>{
+              return tag.id
+            })
+          }
+        ]
+      })
+    }
+  
+    function onDeleteNote(id:string) {
+      setNotes(prev=>{
+        return prev.filter(note=>{
+          return note.id !== id
+        })
+      })
+    }
+  
+    function onUpdateNote(id:string, {tags, ...data}:NoteData) {
+      setNotes (prev=>{
+        return (prev.map(note=>{
+          if (note.id === id) {
+            return {
+              ...note, 
+              ...data, 
+              tagIds: tags.map(tag=>tag.id)
+            }
+          }
+          else {
+            return note
+          }
+        }))
+      })
+    }
+
 
     const filteredNotes = useMemo(()=>{
-        return notes.filter(note=> {
+        return notesTagged.filter(note=> {
             //(match titles or empty title) and (empty tags or
             //for every selected tag T, find all notes that have at least one tag t where T.id = t.id) 
             return (title === "" || note.title.toLowerCase().includes(title.toLowerCase()))
@@ -33,6 +120,11 @@ export default function NoteList(props:NoteListProps) {
         })
     }, [title, selectedTags])
   
+    function selectNote(note:EditNoteProps) {
+        setSelectedNote(note)
+        setEditOpen(true)
+    }
+
     return (
         <div className="relative">
             <Header 
@@ -52,7 +144,7 @@ export default function NoteList(props:NoteListProps) {
                 {
                     filteredNotes.map(note=>{
                         return (
-                            <NoteCard key={note.id} id={note.id} title={note.title} tags={note.tags} markdown={note.markdown}/>
+                            <NoteCard key={note.id} id={note.id} title={note.title} tags={note.tags} markdown={note.markdown} onSelect={()=>selectNote(note)}/>
                         )
                     })
                 }
@@ -64,7 +156,14 @@ export default function NoteList(props:NoteListProps) {
                 onSubmit={onNoteCreate} 
                 onAddTag={onAddTag} 
             />
-          
+            <EditNoteModal
+                availableTags={availableTags} 
+                open={editOpen} 
+                handleClose={()=>setEditOpen(false)}
+                onSubmit={(data)=>onUpdateNote(selectedNote.id, data)} 
+                onAddTag={onAddTag} 
+                selectedNote={selectedNote}
+            />
             <EditTagsModal 
                 open={open} 
                 handleClose={()=>setOpen(false)} 

@@ -14,7 +14,7 @@ export type Tag = {
 }
 
 export type NoteFormProps = {
-    onSubmit: (data: NoteData) => void
+    onSubmit: Function
     onAddTag: (tag: Tag) => void
     availableTags: Tag[]
 } & Partial<NoteData>
@@ -27,4 +27,12 @@ export type RawNoteData = {
     title: string
     markdown: string
     tagIds: string[]
+}
+
+export type EditNoteProps = {
+    id:string,
+    title:string,
+    markdown:string,
+    tagIds:string[],
+    tags:Tag[]
 }
