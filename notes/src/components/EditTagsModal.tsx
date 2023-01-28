@@ -22,7 +22,6 @@ export default function EditTagsModal(props:EditTagsModalProps) {
 
             </div>
             <div className='flex flex-col'>
-                
                 <div className='flex flex-col gap-y-2'>
                     {
                         availableTags.map(tag=>{

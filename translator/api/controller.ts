@@ -3,8 +3,11 @@ export default class Controller {
     static apiTranslateText(req:any, res:any, next:any) {
         const text = req.query.text
         const target = req.query.target
-
-        translate({text, target}).then((result)=>{
+        const options= {
+            from:req.query.from,
+            to:req.query.to,
+        }
+        translate({text, target, options}).then((result)=>{
             res.json({output:result})
         })
         .catch(()=> {

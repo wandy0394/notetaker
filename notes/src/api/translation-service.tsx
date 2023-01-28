@@ -10,10 +10,12 @@ const axiosInstance = axios.create({
 })
 
 export default class Translator {
-    static async translate(text:string, target:string) {
+    static async translate(text:string, source:string, target:string) {
         const params = {
             text:text,
-            target:target
+            target:target,
+            from:source,
+            to:target
         }
         try {
             const result = await axiosInstance.get('/translate', {params})

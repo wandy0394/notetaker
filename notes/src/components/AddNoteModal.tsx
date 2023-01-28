@@ -25,7 +25,9 @@ export default function AddNoteModal(props:AddNoteModalProps) {
     const markdownRef=useRef<HTMLTextAreaElement>(null)
     const [selectedTags, setSelectTags] = useState<Tag[]>(tags)
     const [translatedText, setTranslatedText] = useState<string>('')
+    const [sourceText, setSourceText] = useState<string>('')
     const [targetLang, setTargetLang] = useState<string>('en')
+    const [sourceLang, setSourceLang] = useState<string>('en')
     const navigate = useNavigate()
 
     useEffect(()=>{
@@ -43,8 +45,8 @@ export default function AddNoteModal(props:AddNoteModalProps) {
     }
     function handleTranslate(e: FormEvent) {
         e.preventDefault()
-        let markdown = markdownRef.current!.value
-        Translator.translate(markdown, targetLang)
+        // let markdown = markdownRef.current!.value
+        Translator.translate(sourceText, sourceLang, targetLang)
             .then((result)=>{
                 console.log(result)
                 setTranslatedText(result.output)
@@ -124,25 +126,40 @@ export default function AddNoteModal(props:AddNoteModalProps) {
                         defaultValue={markdown} 
                         placeholder='Add notes...'
                     />
-                    <div className='flex flex-col gap-y-2'>
-                        <button onClick={handleTranslate} className='px-2 rounded bg-gray-50 '>Translate</button> 
-                        <select onChange={(e)=>setTargetLang(e.target.value)}>
+                </div>
+                <input className='px-4' placeholder='What do you want to translate..?' value={sourceText} onChange={(e)=>setSourceText(e.target.value)}></input>
+                <input className='px-4' placeholder='...' value={translatedText} disabled></input>
+                <div className='flex items-end justify-between gap-x-4 w-full'>
+                    <div className='flex flex-col items-start gap-x-2'>
+                        <p className='text-xs'>Translate from:</p>
+                        <select className='bg-transparent rounded' onChange={(e)=>setSourceLang(e.target.value)}>
+                            {
+                                Object.entries(languages).map(([code, name])=>{
+                                    return (
+                                        code === 'en' ?
+                                        (<option selected value={code} label={name}></option>):
+                                        (<option value={code} label={name}></option>)
+                                        )
+                                    })
+                                }
+
+                        </select>
+                    </div>
+                    <div className='flex flex-col items-start gap-x-2'>
+                        <p className='text-xs'>To:</p>
+                        <select className='bg-transparent rounded' onChange={(e)=>setTargetLang(e.target.value)}>
                             {
                                 Object.entries(languages).map(([code, name])=>{
                                     return (
                                         <option value={code} label={name}></option>
-                                    )
-                                })
-                            }
+                                        )
+                                    })
+                                }
 
                         </select>
                     </div>
-                    <textarea 
-                        className='px-4 py-2 bg-blue-300 w-full resize-none'
-                        style={{height:'30vh'}}
-                        disabled      
-                        value={translatedText}                   
-                    />
+                    <button onClick={handleTranslate} className='px-2 rounded-full bg-blue-700 text-white flex items-center justify-center hover:bg-blue-400'>Go</button> 
+
                 </div>
             </div>
             <div className='flex gap-x-4 py-4'>
