@@ -4,18 +4,13 @@ import CreateableReactSelect from "react-select/creatable"
 import { NoteData, NoteFormProps, Tag } from "../types/NoteTypes"
 import {v4 as uuidV4} from 'uuid'
 
-type AddNoteModalProps = {
+type EditNoteModalProps = {
     open: Boolean
     handleClose: ()=>void
     availableTags: Tag[]
-    // title:string 
-    // markdown:string 
-    // tags:Tag[]
-    // onAddTag:(tag:Tag) => void
-    // onSubmit: (data: NoteData) => void
 } & NoteFormProps
 
-export default function AddNoteModal(props:AddNoteModalProps) {
+export default function EditNoteModal(props:EditNoteModalProps) {
     const {open, handleClose, availableTags, onAddTag, onSubmit, title="", markdown="", tags=[]} = props
     
     const titleRef=useRef<HTMLInputElement>(null)
@@ -44,7 +39,6 @@ export default function AddNoteModal(props:AddNoteModalProps) {
                 <input 
                     className='rounded h-9 px-2 text-xl font-bold bg-transparent'
                     required ref={titleRef}  
-                    defaultValue={title}
                     placeholder='Note title...'
                 />
                 <CreateableReactSelect 
