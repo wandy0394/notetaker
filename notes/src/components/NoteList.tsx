@@ -118,7 +118,7 @@ export default function NoteList(props:NoteListProps) {
             return (title === "" || note.title.toLowerCase().includes(title.toLowerCase()))
                 && (selectedTags.length === 0 || selectedTags.every(tag=>note.tags.some(noteTag => noteTag.id === tag.id))) 
         })
-    }, [title, selectedTags, notesTagged])
+    }, [title, selectedTags, notesTagged, availableTags])
   
     function selectNote(note:EditNoteProps) {
         setSelectedNote(note)
