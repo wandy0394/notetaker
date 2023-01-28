@@ -16,7 +16,7 @@ export default class Translator {
             target:target
         }
         try {
-            const result = await axiosInstance.get('/translate', {params:params})
+            const result = await axiosInstance.get('/translate', {params})
             return result.data
         }
         catch {
