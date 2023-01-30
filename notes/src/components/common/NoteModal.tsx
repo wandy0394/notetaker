@@ -1,11 +1,8 @@
-import { FormEvent, useEffect, useRef, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { FormEvent, useRef } from "react"
 import CreateableReactSelect from "react-select/creatable"
-import { EditNoteProps, NoteData, NoteFormProps, Tag } from "../../types/NoteTypes"
+import {  NoteFormProps, Tag } from "../../types/NoteTypes"
 import {v4 as uuidV4} from 'uuid'
-import Translator from "../../api/translation-service"
-import { ReactMarkdown } from "react-markdown/lib/react-markdown"
-import languages from "../../languages.json"
+
 import TranslationForm from "./TranslationForm"
 
 type NoteModalProps = {
@@ -24,10 +21,13 @@ export default function NoteModal(props:NoteModalProps) {
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault()
+        const today = new Date()
         onSubmit({
             title:titleRef.current!.value,
             markdown: markdownRef.current!.value,
-            tags:selectedTags
+            tags:selectedTags,
+            dateStamp: today.toDateString()
+            
         })
         handleClose()
     }

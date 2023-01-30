@@ -5,7 +5,8 @@ export type Note = {
 export type NoteData = {
     title: string
     markdown: string
-    tags: Tag[]
+    tags: Tag[],
+    dateStamp: string
 }
 
 export type Tag = {
@@ -27,6 +28,7 @@ export type RawNoteData = {
     title: string
     markdown: string
     tagIds: string[]
+    dateStamp: string
 }
 
 export type EditNoteProps = {

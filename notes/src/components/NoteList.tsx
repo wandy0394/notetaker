@@ -144,7 +144,15 @@ export default function NoteList(props:NoteListProps) {
                 {
                     filteredNotes.map(note=>{
                         return (
-                            <NoteCard key={note.id} id={note.id} title={note.title} tags={note.tags} markdown={note.markdown} onSelect={()=>selectNote(note)}/>
+                            <NoteCard 
+                              key={note.id} 
+                              onDelete={onDeleteNote}
+                              // title={note.title} 
+                              // tags={note.tags} 
+                              // markdown={note.markdown} 
+                              // dateStamp = {note.dateStamp}
+                              note={note} 
+                              onSelect={()=>selectNote(note)}/>
                         )
                     })
                 }
