@@ -5,5 +5,8 @@ const router = express.Router()
 
 router.route("/notes")
     .get(NotesController.apiGetNotes)
-
+    .post(NotesController.apiAddNote)
+    .delete(NotesController.apiDeleteNote)
+    .put(NotesController.apiUpdateNote)
+    
 export default router
