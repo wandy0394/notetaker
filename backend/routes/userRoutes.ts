@@ -6,7 +6,7 @@ router.route('/login')
     .post(UserController.apiLoginUser)
     .get(UserController.apiLoginUser)
 
-router.route('/signup')
+router.route('/register')
     .post(UserController.apiRegisterUser)
 
 router.route('/users')
