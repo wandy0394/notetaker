@@ -16,6 +16,7 @@ export function useLogin() {
         if (response.error) {
             setIsLoading(false)
             setError(response.error.error)
+            throw Error(response.error.error)
         }
         else {
             //store user in localStorage

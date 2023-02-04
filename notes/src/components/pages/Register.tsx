@@ -1,57 +1,74 @@
 import {useState, FormEvent} from 'react'
 import {Link} from 'react-router-dom'
 import Authenticator from '../../api/authentication-service'
-import { useRegister
- } from '../../hooks/useRegister'
+import { useRegister} from '../../hooks/useRegister'
+import {useNavigate} from 'react-router-dom'
+
+
 export default function Register() {
     const [name, setName] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const {register, error, isLoading} = useRegister()
+    const navigate = useNavigate()
 
     async function handleSubmit(e:FormEvent) {
         e.preventDefault()
-        console.log(email, password)
-        const response = await register(email, password, name)
+        register(email, password, name)
+            .then(()=>{
+                navigate('/')
+            })
+            .catch((error)=>{
+
+            })
     }
 
     return (
-        <form onSubmit={handleSubmit} className='flex flex-col gap-y-4 items-center justify-center w-1/2'>
-            <h3>Register</h3>
-            <div className='flex flex-col gap-y-2'>
-                <label>Name:</label>
-                <input
-                    className='w-full'
-                    type='text'
-                    onChange = {(e)=>setName(e.target.value)}
-                    value={name}
-                />
-            </div>
-            <div className='flex flex-col gap-y-2'>
-                <label>Email:</label>
-                <input
-                    className='w-full'
-                    type='email'
-                    onChange = {(e)=>setEmail(e.target.value)}
-                    value={email}
-                />
-            </div>
-            <div className='flex flex-col gap-y-2'>
-                <label>Password:</label>
-                <input
-                    className='w-full'
-                    type='password'
-                    onChange = {(e)=>setPassword(e.target.value)}
-                    value={password}
-                />
-            </div>
-            <div className='flex gap-x-8 items-center justify-center'>
-                <button disabled={isLoading as boolean} type='submit'>Register</button>
-                <Link to='..' >Go Back</Link>
-            </div>
-            <div className='text-red-700'>
-                {error}
-            </div>
-        </form>
+        <div className='m-auto py-24 w-screen'>
+
+            <form onSubmit={handleSubmit} className='flex flex-col gap-y-4 items-center justify-center w-2/3 mx-auto'>
+                <h3 className='text-4xl font-bold'>Register</h3>
+                <div className='flex flex-col gap-y-2 w-1/3'>
+                    <label className='text-xl'>Name:</label>
+                    <input
+                        className='w-full'
+                        type='text'
+                        onChange = {(e)=>setName(e.target.value)}
+                        value={name}
+                    />
+                </div>
+                <div className='flex flex-col gap-y-2 w-1/3'>
+                    <label className='text-xl'>Email:</label>
+                    <input
+                        className='w-full'
+                        type='email'
+                        onChange = {(e)=>setEmail(e.target.value)}
+                        value={email}
+                    />
+                </div>
+                <div className='flex flex-col gap-y-2 w-1/3'>
+                    <label className='text-xl'>Password:</label>
+                    <input
+                        className='w-full'
+                        type='password'
+                        onChange = {(e)=>setPassword(e.target.value)}
+                        value={password}
+                    />
+                </div>
+                <div className='flex gap-x-8 items-center justify-center'>
+                    <button 
+                        disabled={isLoading as boolean} 
+                        type='submit'
+                        className='rounded border-1 bg-blue-700 text-white px-2 py-1 align-middle hover:bg-blue-400'
+                    >
+                        Register
+                    </button>
+                    <Link to='..' >Go Back</Link>
+                </div>
+                <div className='text-red-700'>
+                    {error}
+                </div>
+            </form>
+        </div>
     )
 }

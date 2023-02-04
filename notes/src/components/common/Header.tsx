@@ -4,6 +4,7 @@ import { Tag } from "../../types/NoteTypes"
 import {HiPencil} from "react-icons/hi/"
 import { useLogout } from "../../hooks/useLogout"
 import { useAuthContext } from "../../hooks/useAuthContext"
+import LinkButton from "./LinkButton"
 
 
 
@@ -28,9 +29,7 @@ export default function Header(props:HeaderProps) {
                 <div className="text-4xl font-mono w-full font-bold md:w-auto md:text-5xl">
                     {headerTitle}
                 </div>
-                <div className="block sm:hidden text-gray-300 text-xl h-10 flex items-center justify-center">
-                        |
-                </div>
+
                 <div 
                     className="block cursor-default w-9 h-9 flex items-center justify-center md:hidden" 
                     onClick={onEditClick}
@@ -46,14 +45,7 @@ export default function Header(props:HeaderProps) {
                         value={noteTitle} 
                         onChange={e=>onTitleChange(e.target.value)}
                     />
-                    <div className="text-gray-300 text-xl h-10 flex items-center justify-center">
-                        |
-                    </div>
-                    <div className="text-gray-300 text-3xl w-9 h-10 flex items-center justify-center hover:text-gray-500 hover:cursor-default">
-                        <Link to='/new' className='hover:cursor-default'>
-                            +
-                        </Link>
-                    </div>
+
                     
                 </div>
                 <ReactSelect
@@ -104,15 +96,15 @@ export default function Header(props:HeaderProps) {
                 <div className="hidden cursor-default w-9 h-9 flex items-center justify-center md:flex" onClick={onEditClick}>
                     <HiPencil size='24px' className='text-gray-300 hover:text-gray-400'/>
                 </div>
-                <div className='hidden gap-x-4 md:flex'>
+                <div className='gap-x-4 flex items-center justify-around'>
                     {
                         user && <button onClick={logout}>Logout from {user.email}</button>
                     }
                     {
                         !user && (
                             <>
-                                <Link to='/login'>Login</Link>
-                                <Link to='/register'>Register</Link>
+                                <LinkButton to='/login' label='Login'/>
+                                <LinkButton to='/register' label='Register'/>
                             </>
                         )
                     }
