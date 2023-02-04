@@ -1,6 +1,6 @@
 export default class NotesController {
     static async apiGetNotes(req:any, res:any, next:any) {
-        console.log(req)
+        console.log(req.user)
         res.json({msg:'get notes'})
     }
 
