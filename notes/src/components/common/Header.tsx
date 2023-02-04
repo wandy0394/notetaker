@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import ReactSelect from "react-select"
 import { Tag } from "../../types/NoteTypes"
 import {HiPencil} from "react-icons/hi/"
+import { useLogout } from "../../hooks/useLogout"
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 
 
@@ -18,6 +20,8 @@ type HeaderProps = {
 
 export default function Header(props:HeaderProps) {
     const {headerTitle, availableTags, selectedTags, noteTitle, onTagChange, onTitleChange, onEditClick, children} = props
+    const {logout} = useLogout()
+    const {user} = useAuthContext()
     return (
         <div className='fixed w-full flex flex-col bg-blue-100 gap-y-4 items-center justify-around py-4 px-10 md:gap-x-4 md:flex-row md:px-24'>
             <div className="w-full flex justify-between">
@@ -101,8 +105,17 @@ export default function Header(props:HeaderProps) {
                     <HiPencil size='24px' className='text-gray-300 hover:text-gray-400'/>
                 </div>
                 <div className='hidden gap-x-4 md:flex'>
-                    <Link to='/login'>Login</Link>
-                    <Link to='/register'>Register</Link>
+                    {
+                        user && <button onClick={logout}>Logout from {user.email}</button>
+                    }
+                    {
+                        !user && (
+                            <>
+                                <Link to='/login'>Login</Link>
+                                <Link to='/register'>Register</Link>
+                            </>
+                        )
+                    }
                 </div>
             </div>
         </div>

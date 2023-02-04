@@ -49,7 +49,9 @@ export default function Register() {
                 <button disabled={isLoading as boolean} type='submit'>Register</button>
                 <Link to='..' >Go Back</Link>
             </div>
-            {error}
+            <div className='text-red-700'>
+                {error}
+            </div>
         </form>
     )
 }

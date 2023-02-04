@@ -1,16 +1,18 @@
 import { ACTION_TYPES, AuthContext } from "../components/context/AuthContext";
 import {useState} from 'react'
 import Authenticator from "../api/authentication-service";
+
 import { useAuthContext } from "./useAuthContext";
-export function useRegister() {
+export function useLogin() {
     const [error, setError] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState<boolean | null>(null)
     const {dispatch} = useAuthContext()
-    async function register (email:string, password:string, name:string) {
+    
+    async function login (email:string, password:string) {
         setIsLoading(true)
         setError(null)
         
-        const response = await Authenticator.register(email, password, name)
+        const response = await Authenticator.login(email, password)
         if (response.error) {
             setIsLoading(false)
             setError(response.error.error)
@@ -24,5 +26,5 @@ export function useRegister() {
             setIsLoading(false)
         }
     }
-    return {register, error, isLoading}
+    return {login, error, isLoading}
 }

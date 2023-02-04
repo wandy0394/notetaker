@@ -1,14 +1,16 @@
 import {useState, FormEvent} from 'react'
 import {Link} from 'react-router-dom'
+import { useLogin } from '../../hooks/useLogin'
 
 export default function Login() {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-
+    const {login, isLoading, error} = useLogin()
 
     async function handleSubmit(e:FormEvent) {
         e.preventDefault()
         console.log(email, password)
+        const response = await login(email, password)
     }
 
     return (
@@ -33,9 +35,10 @@ export default function Login() {
                 />
             </div>
             <div className='flex gap-x-8 items-center justify-center'>
-                <button type='submit'>Login</button>
+                <button disabled={isLoading as boolean} type='submit'>Login</button>
                 <Link to='..' >Go Back</Link>
             </div>
+            {error}
         </form>
     )
 }

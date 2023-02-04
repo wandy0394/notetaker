@@ -35,4 +35,28 @@ export default class Authenticator {
             })
         return response
     }
+
+    static async login(email:string, password:string) {
+        const params = {
+            email:email,
+            password:password,
+        }
+        const response = await axiosInstance
+            .post('/login', params)
+            .then((response)=>{
+                return response.data
+            })
+            .catch((error)=>{
+                if (error.response) {
+                    return {error:error.response.data}
+                }
+                else if (error.request) {
+                    return {error:error.request}
+                }
+                else {
+                    return {error:'An error has occurred.'}
+                }
+            })
+        return response
+    }
 }
