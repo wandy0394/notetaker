@@ -100,6 +100,10 @@ export default function Header(props:HeaderProps) {
                 <div className="hidden cursor-default w-9 h-9 flex items-center justify-center md:flex" onClick={onEditClick}>
                     <HiPencil size='24px' className='text-gray-300 hover:text-gray-400'/>
                 </div>
+                <div className='hidden gap-x-4 md:flex'>
+                    <Link to='/login'>Login</Link>
+                    <Link to='/register'>Register</Link>
+                </div>
             </div>
         </div>
     )

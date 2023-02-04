@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// define static register method
+//static register method
 userSchema.statics.register = async function(email:string, password:string, name:string) {
     if (!email || !password || ! name) throw Error('Email, password and name must be filled.')
     if (!validator.isEmail(email)) throw Error('Email is not valid.')
@@ -40,6 +40,18 @@ userSchema.statics.register = async function(email:string, password:string, name
         name:name,
         password:hash
     })
+    return user
+}
+
+//login method
+userSchema.statics.login = async function(email:string, password:string) {
+    if (!email || !password) throw Error('Email, password must be filled.')
+    const user = await this.findOne({email})
+    if (!user) throw Error('Email could not be found.')
+
+    const passwordMatched = await bcrypt.compare(password, user.password)
+    if (!passwordMatched) throw Error('Invalid credentials.')
+
     return user
 }
 

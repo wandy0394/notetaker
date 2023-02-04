@@ -10,7 +10,7 @@ import EditNoteModal from './EditNoteModal'
 
 type NoteListProps = {
     availableTags?: Tag[]
-    notes?: SimpleNote[]
+    // notes?: SimpleNote[]
     updateTag?: (id:string, label:string) => void
     deleteTag?: (id:string) => void
     onAddTag?: (tag: Tag) => void
