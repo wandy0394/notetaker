@@ -9,7 +9,7 @@ export default class NotesController {
                 const notes = Notes.find().where({user:user_id})
                 res.status(200).json(notes)
             }
-            catch (err) {
+            catch (err:any) {
                 res.status(400).json({error:err.message})
             }
         }
@@ -31,7 +31,7 @@ export default class NotesController {
                 })
                 res.status(200).json({newNote})
             }
-            catch (err) {
+            catch (err:any) {
                 res.status(400).json({error:err.message})
             }
         }
@@ -40,7 +40,7 @@ export default class NotesController {
         try {
 
         }
-        catch (err) {
+        catch (err:any) {
             res.status(400).json({error:err.message})
         }
     }
@@ -49,7 +49,7 @@ export default class NotesController {
         try {
 
         }
-        catch (err) {
+        catch (err:any) {
             res.status(400).json({error:err.message})
         }
     }
