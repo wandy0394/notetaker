@@ -4,23 +4,11 @@ import { Tag, NoteData, RawNote, EditNoteProps} from '../types/NoteTypes'
 import AddNoteModal from './AddNoteModal'
 import Header from './common/Header'
 import EditTagsModal from './EditTagsModal'
-import NoteCard, { AddNoteCard, SimpleNote } from './NoteCard'
+import NoteCard, { AddNoteCard } from './NoteCard'
 import {v4 as uuidV4} from 'uuid'
 import EditNoteModal from './EditNoteModal'
 
-type NoteListProps = {
-    availableTags?: Tag[]
-    // notes?: SimpleNote[]
-    updateTag?: (id:string, label:string) => void
-    deleteTag?: (id:string) => void
-    onAddTag?: (tag: Tag) => void
-    onNoteCreate?: (data:NoteData) => void
-}
-
-
-
-
-export default function NoteList(props:NoteListProps) {
+export default function NoteList() {
     // const {availableTags, onAddTag} = props
     const [selectedTags, setSelectTags] = useState<Tag[]>([])
     const [title, setTitle] = useState<string>('')
@@ -31,9 +19,6 @@ export default function NoteList(props:NoteListProps) {
     const [availableTags, setAvailableTags] = useLocalStorage<Tag[]>("TAGS", [])
     const [selectedNote, setSelectedNote] = useState<EditNoteProps>({id:'', title:'', markdown:'', tagIds:[], tags:[]})
 
-    useEffect(()=>{
-        console.log('Tag changed')
-    },[availableTags])
 
     const notesTagged = useMemo(()=>{
       return notes.map(note=>{
@@ -147,10 +132,6 @@ export default function NoteList(props:NoteListProps) {
                             <NoteCard 
                               key={note.id} 
                               onDelete={onDeleteNote}
-                              // title={note.title} 
-                              // tags={note.tags} 
-                              // markdown={note.markdown} 
-                              // dateStamp = {note.dateStamp}
                               note={note} 
                               onSelect={()=>selectNote(note)}/>
                         )
@@ -181,7 +162,5 @@ export default function NoteList(props:NoteListProps) {
             />
         </div>
     )
-
-
 }
 

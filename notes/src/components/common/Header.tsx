@@ -96,7 +96,10 @@ export default function Header(props:HeaderProps) {
                 <div className="hidden cursor-default w-9 h-9 flex items-center justify-center md:flex" onClick={onEditClick}>
                     <HiPencil size='24px' className='text-gray-300 hover:text-gray-400'/>
                 </div>
-                <div className='gap-x-4 flex items-center justify-around'>
+
+                {/* Login/Register added as learning experiment. No intention of extending app to have server-side storage  */}
+
+                {/* <div className='gap-x-4 flex items-center justify-around'>
                     {
                         user && <button onClick={logout}>Logout from {user.email}</button>
                     }
@@ -108,7 +111,7 @@ export default function Header(props:HeaderProps) {
                             </>
                         )
                     }
-                </div>
+                </div> */}
             </div>
         </div>
     )

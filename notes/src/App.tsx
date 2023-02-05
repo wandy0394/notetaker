@@ -12,8 +12,9 @@ function App() {
         <Routes>
           <Route path='/' element={<NoteList/>}>
           </Route>
-            <Route path='/register' element={<Register/>}/>
-            <Route path='/login' element={<Login/>}/>
+          {/* These routes for Login and Register added for learning purposes. */}
+            {/* <Route path='/register' element={<Register/>}/>
+            <Route path='/login' element={<Login/>}/> */}
           <Route path='*' element={<Navigate to='/'/>}/>
         </Routes>
       </div>
