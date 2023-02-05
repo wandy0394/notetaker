@@ -57,9 +57,11 @@ export default function Register() {
                 </div>
                 <div className='flex gap-x-8 items-center justify-center'>
                     <button 
-                        disabled={isLoading as boolean} 
+                        // disabled={isLoading as boolean} 
+                        disabled
                         type='submit'
-                        className='rounded border-1 bg-blue-700 text-white px-2 py-1 align-middle hover:bg-blue-400'
+                        // className='rounded border-1 bg-blue-700 text-white px-2 py-1 align-middle hover:bg-blue-400'
+                        className='rounded border-1 bg-gray-400 text-white px-2 py-1 align-middle'
                     >
                         Register
                     </button>
