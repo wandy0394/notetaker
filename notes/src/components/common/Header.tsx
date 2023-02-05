@@ -99,7 +99,7 @@ export default function Header(props:HeaderProps) {
 
                 {/* Login/Register added as learning experiment. No intention of extending app to have server-side storage  */}
 
-                {/* <div className='gap-x-4 flex items-center justify-around'>
+                <div className='gap-x-4 flex items-center justify-around'>
                     {
                         user && <button onClick={logout}>Logout from {user.email}</button>
                     }
@@ -111,7 +111,7 @@ export default function Header(props:HeaderProps) {
                             </>
                         )
                     }
-                </div> */}
+                </div>
             </div>
         </div>
     )
