@@ -11,11 +11,11 @@ const axiosInstance = axios.create({
 
 export default class NoteService {
 
-    static async getNotes(user) {
+    static async getNotes(user:any) {
 
     }
 
-    static async addNote(note, user) {
+    static async addNote(note:any, user:any) {
         
     }
 }

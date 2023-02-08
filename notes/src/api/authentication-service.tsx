@@ -1,7 +1,8 @@
 import axios from "axios"
 
 const axiosInstance = axios.create({
-    baseURL: 'http://192.168.0.128:4002/api/v1/users/',
+    //baseURL: 'http://192.168.0.128:4002/api/v1/users/',
+    baseURL: 'https://app-backend-dot-notetaker-translator.ts.r.appspot.com/api/v1/users/',
     // timeout:3000,
     headers: {
         "Accept" : "*",
