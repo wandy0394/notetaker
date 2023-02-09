@@ -1,6 +1,6 @@
-.backend/app.yaml
-./notes/app.yaml
-./translator/app.yaml
+backend/app.yaml
+notes/app.yaml
+translator/app.yaml
 
 # Logs
 logs
